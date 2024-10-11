@@ -11,3 +11,4 @@ if a == 'henna!':
     else:
         pass
 "Miks see ei tööta"
+proov commit
