@@ -1,4 +1,9 @@
 print("Hello world")
+a = "hennu"
+
+
+HENNU
+
 a = 'henna!'
 if a == 'henna!':
     for i in range(1011):
