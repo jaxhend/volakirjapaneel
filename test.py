@@ -13,3 +13,5 @@ if a == 'henna!':
 "Miks see ei tööta"
 proov
 commit1 = commit
+
+,mida sa kammid
