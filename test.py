@@ -5,3 +5,4 @@ if a == 'henna!':
         print(i)
     else:
         pass
+"Miks see ei tööta"
