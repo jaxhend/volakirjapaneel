@@ -11,4 +11,5 @@ if a == 'henna!':
     else:
         pass
 "Miks see ei tööta"
-proov commit
+proov
+commit1 = commit
