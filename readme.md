@@ -1,3 +1,4 @@
 # Programmeerimine I projekt
-hehe xd
-lets go projekt
+Hendrik \
+ja \
+Robert \
