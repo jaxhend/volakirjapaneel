@@ -2,27 +2,33 @@ from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import urllib.parse
 import requests
+import bonds
 
 
-def get_symbol():
+def get_symbol((dictionary, keyword)):
+    dictionary = bonds.dictionary
     # siia lisame võlakirja nimi ja sümboli andmebaasi
+    #BIGB080033B
     user_symbol = input("Sisesta võlakirja sümbol: ") # ajutiselt väljaspool vigu
-    return None
+    return user_symbol
 
 
-def get_dates():
+def get_dates(value = ""):
     date_format = "%d.%m.%Y"
     today = datetime.now()
 
-    print("-----------------------Speeddial-----------------------")
-    print("Today - T")
-    print("Yesterday - Y")
-    print("This week- TW")
-    print("Last week - LW")
-    print("This month - TM")
-    print("Last month - LM")
-    print("Press ENTER if you want to choose specific dates.")
-    choice = input().upper()
+    if value == "":
+        print("-----------------------Speeddial-----------------------")
+        print("Today - T")
+        print("Yesterday - Y")
+        print("This week- TW")
+        print("Last week - LW")
+        print("This month - TM")
+        print("Last month - LM")
+        print("Press ENTER if you want to choose specific dates.")
+        choice = input().upper()
+    else:
+        choice = value
     
     if choice == "T":
         formatted_date_from = today
@@ -93,11 +99,10 @@ def get_dates():
 
 
 def main():
+    domain = "https://fp.lhv.ee/market/balticTrades?"
+    trades = []
     dates = get_dates()
-    user_symbol = "BIGB080033B"
-
-    if len(dates) > 2:
-        pass
+    user_symbol = get_symbol()
 
     for i in range(len(dates)-1):
         data = {
@@ -105,13 +110,11 @@ def main():
             "date": dates[i] + " - " + dates[i+1]
         }
 
-        domain = "https://fp.lhv.ee/market/balticTrades?"
         url = domain + urllib.parse.urlencode(data)
         request = requests.get(url)
         soup  = BeautifulSoup(request.content, 'lxml')
 
         table = soup.find('table')
-        trades = []
         td_elements = []
 
         for row in reversed(table.find_all("td")):
@@ -119,7 +122,8 @@ def main():
         for i in range(2, len(td_elements), 6):
             trades.append((td_elements[i+1], td_elements[i], td_elements[i+3][:10]))
 
-        print(trades)
+    print(trades)
+
 
 if __name__ == "__main__":
     main()
