@@ -1,7 +1,3 @@
-print("Hello World")
-for i in range(10):
-    print(str(i) + " Hello world")
-
 #virtualenv 20.27.0
 
 #Flask version 3.0.3
