@@ -7,7 +7,7 @@ import requests
 
 def main():
     request = requests.get("https://fp.lhv.ee/market/baltic")
-    soup  = BeautifulSoup(request.text, 'lxml')
+    soup = BeautifulSoup(request.text, "lxml")
 
     data = soup.find_all("a", class_=["stock-title", "stock-symbol"])
 
@@ -18,10 +18,11 @@ def main():
         name = data[i].get_text()
         symbol = data[i + 1].get_text()
 
-        if search in symbol: flag = True
+        if search in symbol:
+            flag = True
 
-        if flag: print(f"'{name}': '{symbol}',")
-
+        if flag:
+            print(f"'{name}': '{symbol}',")
 
 
 if __name__ == "__main__":
