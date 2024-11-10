@@ -1,13 +1,15 @@
 # The script asks the user for the name of the bond and time. 
 # The script then outputs the transactions within that time.
 
+# Pean muutma nii, et ei oleks ühtegi print funktsiooni. Funktsioonid ise peaksid ainult tagastama.
+
+
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import urllib.parse
 import requests
 import data
 import re
-
 
 def get_symbol(pattern):
     dictionary = data.database
@@ -21,7 +23,7 @@ def get_symbol(pattern):
         if bond_names == []:
             print("Try again")
             return None
-
+        
         for i in range(len(bond_names)):
             print(f"{i+1}. {bond_names[i]}")
         

@@ -58,5 +58,3 @@ database = {
     'Siauliu Bankas 7.70% Subordinated 22/05/2034': 'SABB077034A',
     'Siauliu Bankas 10.75% 02/06/2033': 'SIAULIU02062033'
 }
-
-
