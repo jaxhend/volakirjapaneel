@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search for Bond</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>Search for a Bond</h1>
+    <form action="/" method="POST">
+        <label for="symbol">Enter Bond Code:</label>
+        <input type="text" id="symbol" name="symbol" required>
+
+        <label for="period">Choose Period:</label>
+        <select id="period" name="period">
+            <option value="T">Today</option>
+            <option value="Y">Yesterday</option>
+            <option value="TW">This Week</option>
+            <option value="LW">Last Week</option>
+            <option value="TM">This Month</option>
+            <option value="LM">Last Month</option>
+        </select>
+
+        <div class="radio-group">
+            <input type="radio" id="buy" name="transaction" value="buy">
+            <label for="buy">Buy</label>
+            <input type="radio" id="sell" name="transaction" value="sell">
+            <label for="sell">Sell</label>
+        </div>
+
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>

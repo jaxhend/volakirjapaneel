@@ -1,15 +1,31 @@
 #pip install virtualenv
 #pip install flask
 
-from flask import Flask, render_template
-import backend  # Import your backend file
-import get_data
+from flask import Flask, render_template, request
+import backend
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
-    data = get_data()
+    if request.method == 'POST':
+        symbol = request.form.get('symbol')
+        period = request.form.get('period')
+        
+        bond_code = backend.get_symbol(symbol)
+        if not bond_code:
+            data['error'] = "Bond not found. Try again."
+        else:
+            dates = backend.get_dates(period)
+            trades = backend.main(bond_code, dates)
+            average_price = round(sum(float(trade[0]) for trade in trades) / len(trades), 2) if trades else None
+
+            data = {
+                'trades': trades,
+                'average_price': average_price,
+                'period': period,
+                'bond_code': bond_code
+            }
     return render_template('index.html', data=data)
 
 if __name__ == '__main__':
