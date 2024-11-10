@@ -85,8 +85,8 @@ def get_dates(value = ""):
     else:
         while True:
             try:
-                user_date_from = input("Tehingud alates (formaadis dd.mm.yy): ").strip()
-                user_date_end = input("Tehingud kuni (formaadis dd.mm.yy): ").strip()
+                user_date_from = input("Transactions from (dd.mm.yyyy): ").strip()
+                user_date_end = input("Transactions till (dd.mm.yyyy): ").strip()
                 formatted_date_from = datetime.strptime(user_date_from, date_format)
                 formatted_date_end = datetime.strptime(user_date_end, date_format)
                 break
