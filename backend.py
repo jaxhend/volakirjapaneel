@@ -134,7 +134,7 @@ def main():
 
         url = domain + urllib.parse.urlencode(data)
         request = requests.get(url)
-        soup  = BeautifulSoup(request.text, 'lxml')
+        soup  = BeautifulSoup(request.text, 'html.parser')
 
         table = soup.find('table')
         td_elements = []
