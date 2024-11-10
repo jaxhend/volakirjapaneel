@@ -1,3 +1,6 @@
+# The script asks the user for the name of the bond and time. 
+# The script then outputs the transactions within that time.
+
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import urllib.parse
@@ -22,7 +25,7 @@ def get_symbol(pattern):
         for i in range(len(bond_names)):
             print(f"{i+1}. {bond_names[i]}")
         
-        choice = input("Choose a bond with the corresponding number, or write X and search again: ")
+        choice = input("Choose a bond with the corresponding number or write X and search again: ")
         
         try:
             if bond_names[int(choice)-1] in dictionary:
@@ -92,7 +95,6 @@ def get_dates(value = ""):
 
         if formatted_date_end > today:
             formatted_date_end = today
-            return [formatted_date_from, formatted_date_end]
 
     difference = formatted_date_end - formatted_date_from
     day_difference = difference.days
@@ -116,15 +118,18 @@ def get_dates(value = ""):
     return scrapable_dates
 
 
-def main():
+def main(user_symbol = "", dates = ""):
     domain = "https://fp.lhv.ee/market/balticTrades?"
     trades = []
-    while True:
-        search_pattern = input("Search for a bond or press ENTER to see all bonds: ")
-        user_symbol = get_symbol(search_pattern)
-        if user_symbol != None:
-            break
-    dates = get_dates()
+    if user_symbol == "":
+        while True:
+            search_pattern = input("Search for a bond or press ENTER to see all bonds: ")
+            user_symbol = get_symbol(search_pattern)
+            if user_symbol != None:
+                break
+    
+    if dates == "":
+        dates = get_dates()
 
     for i in range(len(dates)-1):
         data = {
@@ -146,6 +151,11 @@ def main():
 
     print(trades)
 
+    sum = 0
+    for j in range(len(trades)):
+        sum += float(trades[j][0])
+        average = round(sum/len(trades) , 2)
+    print(f"Average price is {average}")
 
 
 if __name__ == "__main__":
