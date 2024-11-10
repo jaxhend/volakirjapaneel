@@ -2,15 +2,34 @@ from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import urllib.parse
 import requests
-import bonds
+import data
+import re
 
 
-def get_symbol((dictionary, keyword)):
-    dictionary = bonds.dictionary
-    # siia lisame võlakirja nimi ja sümboli andmebaasi
-    #BIGB080033B
-    user_symbol = input("Sisesta võlakirja sümbol: ") # ajutiselt väljaspool vigu
-    return user_symbol
+def get_symbol(pattern):
+    dictionary = data.database
+    while True:
+        bond_names = []
+        for key in dictionary.keys():
+            result = re.search(pattern, key, re.IGNORECASE)
+            if result:
+                bond_names += [key]
+        
+        if bond_names == []:
+            print("Proovi uuesti")
+            return None
+
+        for i in range(len(bond_names)):
+            print(f"{i+1}. {bond_names[i]}")
+        
+        choice = input("Vali vastava numbriga võlakiri, või kirjuta X ja otsi uuesti: ").lower()
+        
+        try:
+            if bond_names[int(choice)-1] in dictionary:
+                return dictionary[bond_names[int(choice)-1]]
+        except:
+            print("Proovi uuesti")
+            return None
 
 
 def get_dates(value = ""):
@@ -101,8 +120,12 @@ def get_dates(value = ""):
 def main():
     domain = "https://fp.lhv.ee/market/balticTrades?"
     trades = []
+    while True:
+        search_pattern = input("Otsi võlakirja või vajuta ENTER, et näha kõiki võlakirju: ")
+        user_symbol = get_symbol(search_pattern)
+        if user_symbol != None:
+            break
     dates = get_dates()
-    user_symbol = get_symbol()
 
     for i in range(len(dates)-1):
         data = {
@@ -112,7 +135,7 @@ def main():
 
         url = domain + urllib.parse.urlencode(data)
         request = requests.get(url)
-        soup  = BeautifulSoup(request.content, 'lxml')
+        soup  = BeautifulSoup(request.text, 'lxml')
 
         table = soup.find('table')
         td_elements = []
