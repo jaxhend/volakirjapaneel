@@ -16,19 +16,19 @@ def get_symbol(pattern):
                 bond_names += [key]
         
         if bond_names == []:
-            print("Proovi uuesti")
+            print("Try again")
             return None
 
         for i in range(len(bond_names)):
             print(f"{i+1}. {bond_names[i]}")
         
-        choice = input("Vali vastava numbriga võlakiri, või kirjuta X ja otsi uuesti: ").lower()
+        choice = input("Choose a bond with the corresponding number, or write X and search again: ")
         
         try:
             if bond_names[int(choice)-1] in dictionary:
                 return dictionary[bond_names[int(choice)-1]]
         except:
-            print("Proovi uuesti")
+            print("Try again")
             return None
 
 
@@ -44,8 +44,7 @@ def get_dates(value = ""):
         print("Last week - LW")
         print("This month - TM")
         print("Last month - LM")
-        print("Press ENTER if you want to choose specific dates.")
-        choice = input().upper()
+        choice = input("Press ENTER if you want to choose specific dates: ").upper()
     else:
         choice = value
     
@@ -121,7 +120,7 @@ def main():
     domain = "https://fp.lhv.ee/market/balticTrades?"
     trades = []
     while True:
-        search_pattern = input("Otsi võlakirja või vajuta ENTER, et näha kõiki võlakirju: ")
+        search_pattern = input("Search for a bond or press ENTER to see all bonds: ")
         user_symbol = get_symbol(search_pattern)
         if user_symbol != None:
             break
@@ -146,6 +145,7 @@ def main():
             trades.append((td_elements[i+1], td_elements[i], td_elements[i+3][:10]))
 
     print(trades)
+
 
 
 if __name__ == "__main__":
