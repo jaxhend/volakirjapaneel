@@ -15,7 +15,7 @@ UI eeskuju (LHV internetiportaal):
 ![image](https://github.com/user-attachments/assets/98482fa0-b05a-40cf-b776-0bc06e3bb4fc)
 
 Andmeid saime: <br />
-https://fp.lhv.ee/market/balti <br />
+https://fp.lhv.ee/market/baltic <br />
 https://nasdaqbaltic.com/statistics/et/bonds <br />
 
 
