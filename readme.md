@@ -2,14 +2,13 @@
 ## 2024/2025 sügissemester
 
 ## Projekt
-### Teema:
+## Teema:
+#
 
-
-### Autorid:
-
-#### mõningane eeskuju:
-Internet.
-ChatGPT aitas probleemseid kohti lahendada.
-
-### Lisakommentaar (nt käivitusjuhend):
-
+# Autorid:
+#
+# mõningane eeskuju:
+#
+# Lisakommentaar (nt käivitusjuhend):
+#
+##################################################
