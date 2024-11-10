@@ -1,0 +1,16 @@
+#pip install virtualenv
+#pip install flask
+
+from flask import Flask, render_template
+import backend  # Import your backend file
+import get_data
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    data = get_data()
+    return render_template('index.html', data=data)
+
+if __name__ == '__main__':
+    app.run(debug=True)
