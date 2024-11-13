@@ -85,7 +85,7 @@ def get_dates(value=""):  # Leiab kuupäevade vahemikud, millele päringuid teha
         formatted_date_from = first_day_last_month
         formatted_date_end = last_day_last_month
 
-    else:  # Võimalus on ka sisestada täpne kuupäev, mis huvi pakub.
+    else:  # Võimalus on ka sisestada täpne kuupäev
         while True:
             try:
                 user_date_from = input("Transactions from (dd.mm.yyyy): ").strip()

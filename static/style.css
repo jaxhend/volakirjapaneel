@@ -5,9 +5,11 @@ body {
     background-color: #f4f4f9;
     color: #333;
 }
+
 h1 {
     color: #444;
 }
+
 form {
     background: #fff;
     padding: 20px;
@@ -17,12 +19,15 @@ form {
     max-width: 400px;
     margin-bottom: 20px;
 }
+
 label {
     display: block;
     margin-top: 10px;
     font-weight: bold;
 }
-input[type="text"], select {
+
+input[type="text"], 
+select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -30,6 +35,7 @@ input[type="text"], select {
     border-radius: 4px;
     box-sizing: border-box;
 }
+
 button {
     background-color: #007bff;
     color: #fff;
@@ -40,30 +46,15 @@ button {
     margin-top: 10px;
     width: 100%;
 }
+
 button:hover {
     background-color: #0056b3;
 }
-.radio-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-.result {
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin-top: 20px;
-}
-.error {
-    color: red;
-    font-weight: bold;
-}
+
 ul {
     padding-left: 20px;
 }
+
 li {
     margin-bottom: 5px;
 }
