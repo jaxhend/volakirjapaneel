@@ -88,8 +88,6 @@ def index():
     else:
         return render_template("index.html")
 
-    return render_template("index.html", symbol_match=symbol_match)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
