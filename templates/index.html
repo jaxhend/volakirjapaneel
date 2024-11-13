@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="et">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search for Bond</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Võlakirjapaneel</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
 
     <h1>Search for a Bond</h1>
@@ -23,14 +25,31 @@
             <option value="LM">Last Month</option>
         </select>
 
-        <div class="radio-group">
-            <input type="radio" id="buy" name="transaction" value="buy">
-            <label for="buy">Buy</label>
-            <input type="radio" id="sell" name="transaction" value="sell">
-            <label for="sell">Sell</label>
-        </div>
-
         <button type="submit">Search</button>
     </form>
+
+    {% if sõna %}
+    <p>Leitud võlakirjad: </p>
+    <ol>
+        {% for bond in sõna %}
+        <li>{{ bond }}</li>
+        {% endfor %} 
+    </ol>
+    
+    <form action="/" method="POST">
+        <label for="symbol">Number:</label>
+        <input type="Number" id="number" name="number" required>
+        <button type="submit">Search</button>
+    </form>
+    {% endif %}
+
+
+    {% if bond1 %}
+        {% for i in range(len(bond1)) %}
+    <ul>
+            {{bond1[i][0][]}}
+    </ul>      
+    {% endif %}
 </body>
+
 </html>

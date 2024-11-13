@@ -157,6 +157,8 @@ def main(user_symbol = "", dates = ""):
         average = round(sum/len(trades) , 2)
     print(f"Average price is {average}")
 
+    return trades
+
 
 if __name__ == "__main__":
     main()
