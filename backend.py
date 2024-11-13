@@ -1,5 +1,4 @@
-# The script asks the user for the name of the bond and time. 
-# The script then outputs the transactions within that time.
+# Siin 
 
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
@@ -150,15 +149,7 @@ def main(user_symbol = "", dates = ""):
             trades.append((td_elements[i+1], td_elements[i], td_elements[i+3][:10]))
 
     print(trades)
-
-    sum = 0
-    for j in range(len(trades)):
-        sum += float(trades[j][0])
-        average = round(sum/len(trades) , 2)
-    print(f"Average price is {average}")
-
     return trades
-
 
 if __name__ == "__main__":
     main()

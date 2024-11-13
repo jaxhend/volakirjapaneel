@@ -1,3 +1,33 @@
+################################################
+#Teema: Balti turu võlakirjapaneel
+#Autorid: Hendrik Jaks, Robert Ilves
+#Mõningane eeskuju: LHV võlakirjade internetiportaal
+#Lisakommentaar (nt käivitusjuhend):
+#pip install beautifulsoup4
+#pip install requests
+#pip install virtualenv
+#pip install flask
+#minna CMD's programmi kausta ning python frontend_flask.py
+#Kasutatud materjalid:
+#https://flask.palletsprojects.com/en/stable/quickstart/
+#https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebirakendus
+#https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebisisuParsimine
+#https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringRegex
+#https://jinja.palletsprojects.com/en/stable/templates/
+#Tulevased plaanid:
+#drop-down funktsioon
+#UI ilusamaks
+#veebirakenduse internetti üles panemine
+#rohkem kasulikku informatsiooni
+#fixida vale sisendi korral veateadet
+#Ajakulu:
+#Hendrik 11h
+#Robert 9h
+################################################ 
+
+
+
+
 from flask import Flask, render_template, request, session
 import random
 
@@ -43,8 +73,10 @@ def index():
             return render_template('index.html', sõna=sõna)
 
         elif 'number' in request.form:
-            number = request.form.get('number') 
-            võlakiri = sõna[int(number)-1]
+            number = int(request.form.get('number'))
+            if number == 0:
+                number = 1
+            võlakiri = sõna[number-1]
 
             dictionary = data.database
             if võlakiri in dictionary:

@@ -1,5 +1,5 @@
-# The purpose of the script is to find the names and symbols of all bonds on the website.
-# The results will be saved in data.py.
+# Loodud funktsioon ühendub LHV Balti turu veebilehega
+# Ja otsib HTML-lehelt kõiki väärtpaberite nimetusi ja sümboleid
 
 from bs4 import BeautifulSoup
 import requests

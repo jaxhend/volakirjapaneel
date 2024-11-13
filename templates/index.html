@@ -1,3 +1,5 @@
+<!--See on meie Flaski HTML template-->
+
 <!DOCTYPE html>
 <html lang="et">
 
@@ -10,44 +12,48 @@
 
 <body>
 
-    <h1>Search for a Bond</h1>
+<!--See nupp on ühenduses webapp.py läbi API-ga-->
+    
+<h1>Võlakirjapaneel</h1>
     <form action="/" method="POST">
-        <label for="symbol">Enter Bond Code:</label>
+        <label for="sümbol">Otsi võlakirja:</label>
         <input type="text" id="symbol" name="symbol" required>
 
-        <label for="period">Choose Period:</label>
+        <label for="period">Vali periood:</label>
         <select id="period" name="period">
-            <option value="T">Today</option>
-            <option value="Y">Yesterday</option>
-            <option value="TW">This Week</option>
-            <option value="LW">Last Week</option>
-            <option value="TM">This Month</option>
-            <option value="LM">Last Month</option>
+            <option value="T">Täna</option>
+            <option value="Y">Eile</option>
+            <option value="TW">See nädal</option>
+            <option value="LW">Eelmine nädal</option>
+            <option value="TM">See kuu</option>
+            <option value="LM">Eelmine kuu</option>
         </select>
 
-        <button type="submit">Search</button>
+        <button type="submit">Otsi</button>
     </form>
 
+<!--Siin kasutame Jinjat. Tekst kuvatakse alles peale nupu vajutust.-->
     {% if sõna %}
     <p>Leitud võlakirjad: </p>
     <ol>
-        {% for bond in sõna %}
-        <li>{{ bond }}</li>
+        {% for bonds in sõna %}
+        <li>{{bonds}}</li>
         {% endfor %} 
     </ol>
     
     <form action="/" method="POST">
-        <label for="symbol">Number:</label>
+        <label for="symbol">Kirjuta siia järjekorranumber (ilma punktita):</label>
         <input type="Number" id="number" name="number" required>
-        <button type="submit">Search</button>
+        <button type="submit">Vaata tehinguid</button>
     </form>
     {% endif %}
 
 
     {% if bond1 %}
-        {% for i in range(len(bond1)) %}
     <ul>
-            {{bond1[i][0][]}}
+        {% for el in bond1 %}
+        <li>Tehing: {{el[0]}} - {{el[1]}} - {{el[2]}}</li>
+        {% endfor %} 
     </ul>      
     {% endif %}
 </body>
