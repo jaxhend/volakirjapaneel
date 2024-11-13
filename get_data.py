@@ -1,5 +1,6 @@
 # Loodud funktsioon ühendub LHV Balti turu veebilehega
-# Ja otsib HTML-lehelt kõiki väärtpaberite nimetusi ja sümboleid
+# Ja otsib HTML-lehelt kõigi võlakirjade nimetusi ja sümboleid
+# Tulemuse oleme salvestanud data.py faili, mida kasutame backend.py-s
 
 from bs4 import BeautifulSoup
 import requests
@@ -7,7 +8,7 @@ import requests
 
 def main():
     request = requests.get("https://fp.lhv.ee/market/baltic")
-    soup = BeautifulSoup(request.text, "lxml")
+    soup = BeautifulSoup(request.text, "html.parser")
 
     data = soup.find_all("a", class_=["stock-title", "stock-symbol"])
 

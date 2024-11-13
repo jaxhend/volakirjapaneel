@@ -33,10 +33,10 @@
     </form>
 
 <!--Siin kasutame Jinjat. Tekst kuvatakse alles peale nupu vajutust.-->
-    {% if sõna %}
+    {% if symbol_match %}
     <p>Leitud võlakirjad: </p>
     <ol>
-        {% for bonds in sõna %}
+        {% for bonds in symbol_match %}
         <li>{{bonds}}</li>
         {% endfor %} 
     </ol>
@@ -49,9 +49,9 @@
     {% endif %}
 
 
-    {% if bond1 %}
+    {% if prices %}
     <ul>
-        {% for el in bond1 %}
+        {% for el in prices %}
         <li>Tehing: {{el[0]}} - {{el[1]}} - {{el[2]}}</li>
         {% endfor %} 
     </ul>      

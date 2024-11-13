@@ -1,47 +1,45 @@
 ################################################
-#Teema: Balti turu võlakirjapaneel
-#Autorid: Hendrik Jaks, Robert Ilves
-#Mõningane eeskuju: LHV võlakirjade internetiportaal
-#Lisakommentaar (nt käivitusjuhend):
-#pip install beautifulsoup4
-#pip install requests
-#pip install virtualenv
-#pip install flask
-#minna CMD's programmi kausta ning python frontend_flask.py
-#Kasutatud materjalid:
-#https://flask.palletsprojects.com/en/stable/quickstart/
-#https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebirakendus
-#https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebisisuParsimine
-#https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringRegex
-#https://jinja.palletsprojects.com/en/stable/templates/
-#Tulevased plaanid:
-#drop-down funktsioon
-#UI ilusamaks
-#veebirakenduse internetti üles panemine
-#rohkem kasulikku informatsiooni
-#fixida vale sisendi korral veateadet
-#Ajakulu:
-#Hendrik 11h
-#Robert 9h
-################################################ 
-
-
+# Programmeerimine I
+# 2024/2025 sügissemester
+#
+# Projekt
+# Teema: Balti turu võlakirjapaneel
+# Kirjeldus:
+# Luua programm, mis näitab Balti turu võlakirju puudutavat
+# infot mugavamalt kui olemasoleval LHV leheküljel.
+#
+#
+# Autorid: Hendrik Jaks, Robert Ilves
+#
+# Mõningane eeskuju:
+# LHV internetipanga võlakirjade ost/müük sektsioon
+#
+# Lisakommentaar (nt käivitusjuhend):
+#
+# pip install beautifulsoup4
+# pip install requests
+# pip install virtualenv
+# pip install flask
+# minna CMD's programmi kausta ning python webapp.py
+#
+# Kasutatud materjalid:
+# https://medium.com/@moraneus/python-flask-a-comprehensive-guide-from-basic-to-advanced-fbc6ec9aa5f7
+# https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebisisuParsimine
+# https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebirakendus
+# https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringRegex
+# https://flask.palletsprojects.com/en/stable/quickstart/
+# https://jinja.palletsprojects.com/en/stable/templates/
+#
+################################################
 
 
 from flask import Flask, render_template, request, session
-import random
-
-from datetime import datetime, timedelta
-from bs4 import BeautifulSoup
-import urllib.parse
-import requests
+import backend
 import data
 import re
-import backend
 
-#https://flask.palletsprojects.com/en/stable/quickstart/#sessions
 
-def get_symbol(pattern):
+def get_symbol(pattern):  # backend.py kärbitud funktsioon
     dictionary = data.database
     while True:
         bond_names = []
@@ -52,43 +50,46 @@ def get_symbol(pattern):
         return bond_names
 
 
-
 app = Flask(__name__)
-app.secret_key = "robertijahendrikuprojekt"
+app.secret_key = "RobertiJaHendrikuProjekt"
 
-@app.route('/',methods=['GET','POST'])
+
+@app.route("/", methods=["GET", "POST"])
 def index():
-    sõna = session.get('sõna', None)
-    time = session.get('time', None)
-    
-    if request.method == 'POST':
-        if 'symbol' in request.form:
-            symbol = request.form.get('symbol')
-            aeg = request.form.get('period')
-            sõna = get_symbol(symbol)
-            time = backend.get_dates(aeg) # sellega korras
+# Kasutame selleks, et salvestada muutujat, kui nuppu vajutatakse teist korda.
+    symbol_match = session.get("symbol_match", None) 
+    time = session.get("time", None)
 
-            session['sõna'] = sõna
-            session['time'] = time
-            return render_template('index.html', sõna=sõna)
+    if request.method == "POST": 
+        if "symbol" in request.form:  # Esimene HTML form
+            symbol = request.form.get("symbol")  # HTML input välja sisend
+            period = request.form.get("period")  # HTML select välja sisend
+            symbol_match = get_symbol(symbol)
+            time = backend.get_dates(period)  # Kasutame backend.py funktsiooni
 
-        elif 'number' in request.form:
-            number = int(request.form.get('number'))
+            session["symbol_match"] = symbol_match # Salvestame muutuja
+            session["time"] = time
+            return render_template("index.html", symbol_match=symbol_match)
+
+        elif "number" in request.form:  # Teine HTML form
+            number = int(request.form.get("number"))
             if number == 0:
                 number = 1
-            võlakiri = sõna[number-1]
+            bond = symbol_match[number - 1]
 
             dictionary = data.database
-            if võlakiri in dictionary:
-                value = dictionary[võlakiri]
+            if bond in dictionary:
+                bond_symbol = dictionary[bond]  # Saame võlakirja tähise
 
-            prices = backend.main(value, time)
+# Kasutame backend.py funktsiooni main, mis väljastab võlakirja hinnad
+            prices = backend.main(bond_symbol, time)
 
-            return render_template('index.html', bond1 = prices) 
+            return render_template("index.html", prices=prices)
     else:
-        return render_template('index.html')
-    
-    return render_template('index.html', sõna=sõna)
+        return render_template("index.html")
 
-if __name__ == '__main__':
+    return render_template("index.html", symbol_match=symbol_match)
+
+
+if __name__ == "__main__":
     app.run(debug=True)
