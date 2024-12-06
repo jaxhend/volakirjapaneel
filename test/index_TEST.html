@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<title>Chartjs Charts</title>
+</head>
+
+<body>
+	<div style="height: 50vh; width: 50%;">
+		<canvas id="myChart"></canvas>
+	</div>
+
+    <script>
+        const labels = JSON.parse('{{ labels | tojson | safe }}'); 
+        const dataPoints = JSON.parse('{{ data | tojson | safe }}');
+    
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Sales',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    data: dataPoints,
+                },
+            ],
+        };
+    
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                maintainAspectRatio: false,
+            },
+        };
+    
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+    
+</body>
+</html>
+
+<!--
+
+<!--See on meie Flaski HTML template--.>
+
+<!DOCTYPE html>
+<html lang="et">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Võlakirjapaneel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<!--See nupp on ühenduses webapp.py läbi API--.>
+    
+<h1>Võlakirjapaneel</h1>
+    <form action="/" method="POST">
+        <label for="sümbol">Otsi võlakirja:</label>
+        <input type="text" id="symbol" name="symbol" required>
+
+        <label for="period">Vali periood:</label>
+        <select id="period" name="period">
+            <option value="T">Täna</option>
+            <option value="Y">Eile</option>
+            <option value="TW">See nädal</option>
+            <option value="LW">Eelmine nädal</option>
+            <option value="TM">See kuu</option>
+            <option value="LM">Eelmine kuu</option>
+        </select>
+
+        <button type="submit">Otsi</button>
+    </form>
+
+<!--Siin kasutame Jinjat. Tekst kuvatakse alles peale nupu vajutust.--.>
+    {% if symbol_match %}
+    <p>Leitud võlakirjad: </p>
+    <ol>
+        {% for bonds in symbol_match %}
+        <li>{{bonds}}</li>
+        {% endfor %} 
+    </ol>
+    
+    <form action="/" method="POST">
+        <label for="symbol">Kirjuta siia järjekorranumber (ilma punktita):</label>
+        <input type="Number" id="number" name="number" required>
+        <button type="submit">Vaata tehinguid</button>
+    </form>
+    {% endif %}
+
+
+    {% if prices %}
+    <ul>
+        {% for el in prices %}
+        <li>Tehing: {{el[0]}} - {{el[1]}} - {{el[2]}}</li>
+        {% endfor %} 
+    </ul>      
+    {% endif %}
+</body>
+
+</html>
+-->
