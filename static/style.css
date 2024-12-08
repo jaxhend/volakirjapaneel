@@ -1,23 +1,35 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     background-color: #f4f4f9;
     color: #333;
 }
 
-h1 {
+.title {
     color: #444;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-form {
+.section {
+    text-align: center;
+    background: #ffffff;
+    display: grid;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 600px;
+}
+
+.form {
+    text-align: center;
     background: #fff;
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 560px;
 }
 
 label {
@@ -61,10 +73,9 @@ li {
 
 /* Graafiku asukoht lehel */
 .graph {
-    margin-left: auto; 
-    margin-right: 0;   
-    display: block;    
-    
+    width: 90%; 
+    margin: 0 auto; 
+    height: 60vh; 
 }
 
 /* From Uiverse.io by CYBWEBALI */ 

@@ -43,13 +43,12 @@ import re
 
 def get_symbol(pattern):  # backend.py kärbitud funktsioon
     dictionary = data.database
-    while True:
-        bond_names = []
-        for key in dictionary:
-            result = re.search(pattern, key, re.IGNORECASE)
-            if result:
-                bond_names += [key]
-        return bond_names
+    bond_names = []
+    for key in dictionary:
+        result = re.search(pattern, key, re.IGNORECASE)
+        if result:
+            bond_names.append(key)
+    return bond_names
 
 
 app = Flask(__name__)
@@ -59,47 +58,52 @@ app.secret_key = "RobertiJaHendrikuProjekt"
 @app.route("/", methods=["GET", "POST"])
 def index():
 # Kasutame selleks, et salvestada muutujat, kui nuppu vajutatakse teist korda.
-    symbol_match = session.get("symbol_match", []) 
-    time = session.get("time", None)
+    all_symbols = list(data.database.keys())
+    symbol_match = [] 
+    prices = []
 
     if request.method == "POST": 
-        if "symbol" in request.form:  # Esimene HTML form
+        if "symbol" in request.form:
             symbol = request.form.get("symbol")  # HTML input välja sisend
             period = request.form.get("period")  # HTML select välja sisend
 
             symbol_match = get_symbol(symbol)
-            time = backend.get_dates(period)  # Kasutame backend.py funktsiooni
 
-            session["symbol_match"] = symbol_match # Salvestame muutuja
-            session["time"] = time
-            return render_template("index.html", symbol_match=symbol_match)
+            if symbol_match:
+                time = backend.get_dates(period)
+                bond_symbol = data.database[symbol_match[0]]  # Esimese vaste tähis
 
-        elif "number" in request.form:  # Teine HTML form
-            number = int(request.form.get("number"))
-            if number == 0:
-                number = 1
-            bond = symbol_match[number - 1]
+                prices = backend.main(bond_symbol, time)
 
-            dictionary = data.database
-            if bond in dictionary:
-                bond_symbol = dictionary[bond]  # Saame võlakirja tähise
+                # Graafiku andmed paremini organiseeritud
+                bond_labels = [el[2] for el in prices]
+                bond_data = [el[0] for el in prices]
+                tehingute_arv = [el[1] for el in prices]
 
-# Kasutame backend.py funktsiooni main, mis väljastab võlakirja hinnad
-            prices = backend.main(bond_symbol, time)
-
-            bond_labels = []
-            bond_data = []
-            tehingute_arv = []
-            for el in prices:
-                bond_labels.append(el[2])
-                bond_data.append(el[0])
-                tehingute_arv.append(el[1])
-
-            return render_template("index.html", prices=prices, bond_labels=bond_labels, bond_data=bond_data, tehingute_arv=tehingute_arv)
-    else:
-        bond_dictionary = data.database
-        return render_template("index.html",bond_dictionary=bond_dictionary)
-
+                # Lehe koos graafiku ja dropdown-boxi andmetega renderdamine
+                return render_template(
+                    "index.html",
+                    all_symbols=all_symbols,
+                    symbol_match=symbol_match,
+                    prices=prices,
+                    bond_labels=bond_labels,
+                    bond_data=bond_data,
+                    tehingute_arv=tehingute_arv,
+                )
+            else:
+                # Juhul kui võlakirja ei leidu
+                return render_template(
+                    "index.html",
+                    all_symbols=all_symbols,
+                    symbol_match=symbol_match,
+                    message="Vastavat võlakirja ei leitud.",
+                )
+    
+    return render_template(
+        "index.html",
+        all_symbols=all_symbols,
+        symbol_match=symbol_match
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
