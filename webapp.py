@@ -20,6 +20,7 @@
 # pip install requests
 # pip install virtualenv
 # pip install flask
+# pip install Flask-Session
 # minna CMD's programmi kausta ning python webapp.py
 #
 # Kasutatud materjalid:
@@ -30,6 +31,7 @@
 # https://flask.palletsprojects.com/en/stable/quickstart/
 # https://jinja.palletsprojects.com/en/stable/templates/
 # https://www.geeksforgeeks.org/how-to-add-graphs-to-flask-apps/
+# https://www.geeksforgeeks.org/autocomplete-input-suggestion-using-python-and-flask/
 ################################################
 
 
@@ -57,13 +59,14 @@ app.secret_key = "RobertiJaHendrikuProjekt"
 @app.route("/", methods=["GET", "POST"])
 def index():
 # Kasutame selleks, et salvestada muutujat, kui nuppu vajutatakse teist korda.
-    symbol_match = session.get("symbol_match", None) 
+    symbol_match = session.get("symbol_match", []) 
     time = session.get("time", None)
 
     if request.method == "POST": 
         if "symbol" in request.form:  # Esimene HTML form
             symbol = request.form.get("symbol")  # HTML input välja sisend
             period = request.form.get("period")  # HTML select välja sisend
+
             symbol_match = get_symbol(symbol)
             time = backend.get_dates(period)  # Kasutame backend.py funktsiooni
 
@@ -94,7 +97,8 @@ def index():
 
             return render_template("index.html", prices=prices, bond_labels=bond_labels, bond_data=bond_data, tehingute_arv=tehingute_arv)
     else:
-        return render_template("index.html")
+        bond_dictionary = data.database
+        return render_template("index.html",bond_dictionary=bond_dictionary)
 
 
 if __name__ == "__main__":

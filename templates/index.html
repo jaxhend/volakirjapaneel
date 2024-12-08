@@ -7,18 +7,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
     <title>Võlakirjapaneel</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 
 <!--See nupp on ühenduses webapp.py läbi API-->
-    
-<h1>Võlakirjapaneel</h1>
+    <h1>Võlakirjapaneel</h1>
     <form action="/" method="POST">
         <label for="sümbol">Otsi võlakirja:</label>
-        <input type="text" id="symbol" name="symbol" required>
+        <input type="text" id="symbol" name="symbol" required placeholder="Sisesta sümbol">
+        
         <label for="period">Vali periood:</label>
         <select id="period" name="period">
             <option value="T">Täna</option>
@@ -30,9 +33,27 @@
         </select>
 
         <button type="submit">Otsi</button>
+<!--    
     </form>
+        <input type="Number" id="number" name="number" required>
+        <button type="submit">Vaata tehinguid</button>
+    </form>
+-->
+        <script>
+            $(function() { 
+                var sobivadVõlad = [ 
+                    {% for symbol in bond_dictionary %} 
+                        "{{ symbol }}", 
+                    {% endfor %} 
+                ]; 
+                $( "#symbol" ).autocomplete({
+                    source: sobivadVõlad 
+                }); 
+            }); 
+        </script>
 
 <!--Siin kasutame Jinjat. Tekst kuvatakse alles peale nupu vajutust.-->
+<!--
     {% if symbol_match %}
     <p>Leitud võlakirjad: </p>
     <ol>
@@ -48,15 +69,15 @@
     </form>
     {% endif %}
 
-<!--
     {% if prices %}
     <ul>
         {% for el in prices %}
-        <li>Tehing: {{el[0]}} - {{el[1]}} - {{el[2]}}</li>
+        <li>Hind: {{ el[0] }}, Tehingute arv: {{ el[1] }}, Kuupäev: {{ el[2] }}</li>        
         {% endfor %} 
-    </ul>      
+    </ul>
     {% endif %}
 -->
+
     {% if prices %}
     <div style="height: 60vh; width: 70%;" class="graph">
         <canvas id="bondChart"></canvas>
