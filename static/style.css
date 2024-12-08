@@ -59,10 +59,11 @@ li {
     margin-bottom: 5px;
 }
 
+/* Graafiku asukoht lehel */
 .graph {
-    margin-left: auto; /* Lükkab elemendi vasakule poole tühja ruumi */
-    margin-right: 0;   /* Joondab elemendi paremale */
-    display: block;    /* Tagab, et konteiner on eraldi plokk-element */
+    margin-left: auto; 
+    margin-right: 0;   
+    display: block;    
     
 }
 
