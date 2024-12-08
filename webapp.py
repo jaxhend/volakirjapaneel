@@ -29,7 +29,7 @@
 # https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringRegex
 # https://flask.palletsprojects.com/en/stable/quickstart/
 # https://jinja.palletsprojects.com/en/stable/templates/
-#
+# https://www.geeksforgeeks.org/how-to-add-graphs-to-flask-apps/
 ################################################
 
 
@@ -84,7 +84,15 @@ def index():
 # Kasutame backend.py funktsiooni main, mis väljastab võlakirja hinnad
             prices = backend.main(bond_symbol, time)
 
-            return render_template("index.html", prices=prices)
+            bond_labels = []
+            bond_data = []
+            tehingute_arv = []
+            for el in prices:
+                bond_labels.append(el[2])
+                bond_data.append(el[0])
+                tehingute_arv.append(el[1])
+
+            return render_template("index.html", prices=prices, bond_labels=bond_labels, bond_data=bond_data, tehingute_arv=tehingute_arv)
     else:
         return render_template("index.html")
 
