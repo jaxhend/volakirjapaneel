@@ -39,6 +39,11 @@ body {
     width: 560px;
 }
 
+/* Et see ei oleks ülemise kasti küljes */
+.no-trades-message {
+    margin-top: 20px; 
+}
+
 label {
     display: block;
     margin-top: 10px;
@@ -49,7 +54,7 @@ input[type="text"],
 select {
     width: 100%;
     padding: 8px;
-    margin-top: 5px;
+    margin-top: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;

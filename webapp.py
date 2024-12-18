@@ -106,13 +106,13 @@ def info(code):
 # (seda seetõttu, kuna mõned (pankade) võlakirjad lunastatakse ennetähtaegselt ja tüüpiliselt see on 5 aastat peale noteerimist)
 
 
-def YTM_calc(isin, choice=""):
+def YTM_calc(isin, choice = ""):
     bond_info = info(isin)
-
-    nominal = int(bond_info[1][1][:5].replace(" ", ""))
+    
+    nominal = float(bond_info[1][1].replace(" ", "").replace("EUR", "").replace(",","."))
     listing_date = bond_info[3][1]
     maturity_date = bond_info[4][1]
-    coupon = float(bond_info[5][1].replace(",", ""))
+    coupon = float(bond_info[5][1].replace(",", "."))
 
     # Leiame viimase müügihinna
     i = 0
@@ -126,7 +126,7 @@ def YTM_calc(isin, choice=""):
         i += 1
     last_dirty_price = result[0][2]
 
-    if choice == "5":  # Juhul kui võlakiri lunastatakse viie aasta pärast noteerimist
+    if choice == "5": # Juhul kui võlakiri lunastatakse viie aasta pärast noteerimist
         formatted_date = datetime.strptime(listing_date, "%d.%m.%Y")
         matures = formatted_date.replace(year=formatted_date.year + 5)
     else:
@@ -134,8 +134,8 @@ def YTM_calc(isin, choice=""):
 
     years = round((matures - today).days / 365.25, 5)
 
-    aasta_tootlus = coupon + ((nominal - last_dirty_price * 10) / years)
-    arvutus = aasta_tootlus / ((nominal + last_dirty_price * 10) / 2)
+    aasta_tootlus = coupon + ((nominal - last_dirty_price / 100 * nominal) / years)
+    arvutus = aasta_tootlus / ((nominal + last_dirty_price / 100 * nominal) / 2)
     return round(arvutus * 100, 2)
 
 
@@ -160,16 +160,19 @@ def index():
         if "symbol" in request.form:
             symbol = request.form.get("symbol")  # HTML input välja sisend
             period = request.form.get("period")  # HTML select välja sisend
+            calc_choice = request.form.get("YTM_calc")  # HTML YTM välja sisend
             symbol_match = get_symbol(symbol)  # Leiab sümbolile vastava info
 
             if symbol_match:
                 bond_symbol = data.database[symbol_match[0]]
                 date_list = get_dates(int(period))
+                calculator = YTM_calc(bond_symbol,calc_choice)
 
                 clean_data = []
                 dirty_data = []
                 for day in date_list:
                     day_trade = scraper(day, bond_symbol)
+                    more_info = info(bond_symbol)
                     if day_trade:
                         # muutmine formaadiks (clean, quantity, date) / (dirty, quantity, date)
                         for trade in day_trade:
@@ -199,6 +202,8 @@ def index():
                         bond_data_clean=bond_data_clean,
                         bond_labels_dirty=bond_labels_dirty,
                         bond_data_dirty=bond_data_dirty,
+                        more_info=more_info,
+                        calculator=calculator
                     )
 
                 else:  # Juhul kui prices on tühi list tagastab vastava teate

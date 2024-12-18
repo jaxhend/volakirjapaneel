@@ -34,6 +34,19 @@
                     <option value="29">Viimased 30 päeva</option>
                     <option value="59">Viimased 60 päeva</option>
                 </select>
+
+                <label for="YTM_calc">YTM:</label>
+                <ul>
+                    <label>
+                        <input type="radio" name="YTM_calc" value="" checked>
+                        Lunastatakse aegumispäeval
+                    </label>
+                    <label>
+                        <input type="radio" name="YTM_calc" value="5">
+                        Ennetähtaegne lunastamine 5 aastat
+                    </label>
+                </ul>
+            
                 <button type="submit">Otsi</button>
             </form>
 
@@ -56,12 +69,25 @@
         </div>
 
         <!-- Kuvab otsingutulemused -->
-        {% if symbol_match %}
+        {% if prices_clean %}
             <ol>
                 {% for bonds in symbol_match %}
-                {{ bonds }}
+                    {{ bonds }}
                 {% endfor %}
             </ol>
+            {% for el in more_info %}
+            <ol>
+                {{ el[0]}}: {{ el[1] }}
+            </ol>
+            {% endfor %}
+            <ol>
+                Võlakirja tulusus tähtajani: {{ calculator }}
+            </ol>
+        {% endif %}
+
+        <!--Juhul kui tehinguid polnud-->
+        {% if not prices_clean %}
+            <p class="puuduvad_tehingud"> {{ message }} </p>
         {% endif %}
 
         <!--Graafiku sektsioon-->
@@ -127,11 +153,7 @@
             });
         
         </script>
-        {% endif %}
 
-        <!--Juhul kui tehinguid polnud-->
-        {% if not prices_clean %}
-        {{ message }}
         {% endif %}
 
         <!-- /* From Uiverse.io by CYBWEBALI */ --> 
