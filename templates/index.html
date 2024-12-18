@@ -35,7 +35,7 @@
                     <option value="59">Viimased 60 päeva</option>
                 </select>
 
-                <label for="YTM_calc">YTM:</label>
+                <label for="YTM_calc">Tootlus lunastamiseni:</label>
                 <ul>
                     <label>
                         <input type="radio" name="YTM_calc" value="" checked>
@@ -70,18 +70,18 @@
 
         <!-- Kuvab otsingutulemused -->
         {% if prices_clean %}
-            <ol>
+            <ol class="additional_info">
                 {% for bonds in symbol_match %}
                     {{ bonds }}
                 {% endfor %}
             </ol>
             {% for el in more_info %}
-            <ol>
+            <ol class="additional_info">
                 {{ el[0]}}: {{ el[1] }}
             </ol>
             {% endfor %}
-            <ol>
-                Võlakirja tulusus tähtajani: {{ calculator }}
+            <ol class="additional_info">
+                Võlakirja tulusus tähtajani: {{ calculator }} %
             </ol>
         {% endif %}
 

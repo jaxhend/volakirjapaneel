@@ -39,8 +39,15 @@ body {
     width: 560px;
 }
 
+.additional_info {
+    line-height: 1.8;
+    margin-top: 120;
+    margin-bottom: 40;
+    margin: 0
+}
+
 /* Et see ei oleks ülemise kasti küljes */
-.no-trades-message {
+.puuduvad_tehingud {
     margin-top: 20px; 
 }
 

@@ -15,8 +15,11 @@
 # LHV internetipanga võlakirjade ost/müük sektsioon
 #
 # Lisakommentaar (nt käivitusjuhend):
-# install ...
-# VAATA ÜLE!!!
+# pip install beautifulsoup4
+# pip install requests
+# pip install virtualenv
+# pip install flask
+# mine CMD's programmi kausta ning sisesta 'python webapp.py'
 #
 # Kasutatud materjalid:
 # https://medium.com/@moraneus/python-flask-a-comprehensive-guide-from-basic-to-advanced-fbc6ec9aa5f7
@@ -27,7 +30,10 @@
 # https://jinja.palletsprojects.com/en/stable/templates/
 # https://www.geeksforgeeks.org/how-to-add-graphs-to-flask-apps/
 # https://www.geeksforgeeks.org/autocomplete-input-suggestion-using-python-and-flask/
-# LISA JUURDE!!!
+# https://www.w3schools.com/html/html_lists_unordered.asp
+# https://www.w3schools.com/tags/tag_select.asp
+# https://www.w3schools.com/css/css_text_spacing.asp
+# https://www.geeksforgeeks.org/response-json-python-requests/
 ################################################
 
 
@@ -112,7 +118,7 @@ def YTM_calc(isin, choice = ""):
     nominal = float(bond_info[1][1].replace(" ", "").replace("EUR", "").replace(",","."))
     listing_date = bond_info[3][1]
     maturity_date = bond_info[4][1]
-    coupon = float(bond_info[5][1].replace(",", "."))
+    coupon = float(bond_info[5][1].replace(",", ".")) / 100 * nominal
 
     # Leiame viimase müügihinna
     i = 0
@@ -124,7 +130,7 @@ def YTM_calc(isin, choice = ""):
         if result != None:
             break
         i += 1
-    last_dirty_price = result[0][2]
+    last_dirty_price = result[0][2] / 100 * nominal
 
     if choice == "5": # Juhul kui võlakiri lunastatakse viie aasta pärast noteerimist
         formatted_date = datetime.strptime(listing_date, "%d.%m.%Y")
@@ -134,8 +140,8 @@ def YTM_calc(isin, choice = ""):
 
     years = round((matures - today).days / 365.25, 5)
 
-    aasta_tootlus = coupon + ((nominal - last_dirty_price / 100 * nominal) / years)
-    arvutus = aasta_tootlus / ((nominal + last_dirty_price / 100 * nominal) / 2)
+    aasta_tootlus = coupon + ((nominal - last_dirty_price) / years)
+    arvutus = aasta_tootlus / ((nominal + last_dirty_price) / 2)
     return round(arvutus * 100, 2)
 
 
