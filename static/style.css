@@ -49,7 +49,7 @@ select {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #5e81ac;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -60,7 +60,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #345175;
 }
 
 ul {
@@ -100,6 +100,10 @@ li {
             0px 12px 10px -10px rgba(0,0,0,0.05);
     border: 1px solid rgba(0,0,0,0.1);
     transform: translateY(0.5em);
+}
+
+.toggleButton {
+    background-color:#81a1c1;
 }
 
 .btn svg {

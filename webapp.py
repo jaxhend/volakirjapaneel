@@ -33,24 +33,6 @@
 # https://www.geeksforgeeks.org/autocomplete-input-suggestion-using-python-and-flask/
 ################################################
 
-# Mina lisan juurde:
-# Sellelt leheküljelt infot https://nasdaqbaltic.com/statistics/et/instrument/EE3300002047/security
-# YTM kalkulaator
-# (võimalus valida kuupäevi)
-
-
-# Sina (Robert):
-# Pane see fail käima ja sa näed et nüüd on vastavalt kuupäev, hind1, hind2 ja kogus
-# Hind1 on ilma intressita ja hind2 on intressiga. Tuleks luua kaks graafikut. Need peaks olema veidi nihkes lis.
-# Võiks saada vahetada.
-
-# Ühilda ära uue koodiga, kasuta nasdaq.py (mitte vana backendi) ja tee seda nasdaq repos. Lisa siia reposse vajalikke faile juurde
-# Uus muudatus see, et hoiame peaaegu (va data.py) kõik ühe faili peal. Ehk nö backend läheks ka webapp.py
-# Pls kommenteeri oma faile, ma ei saa midagi aru muidu.
-# Otsing nii, et saaks seda kerida. Ei oleks mingi mega pikk u know.
-# (Perioodi valimine - äkki saab kuidagi teha kalendri?) - pole suurim prioriteet
-
-#----------------------------------------------------------------------------------------#
 from datetime import datetime, timedelta
 import urllib.parse
 import requests
@@ -61,7 +43,8 @@ def scraper(day, code):
     domain = (
         "https://nasdaqbaltic.com/statistics/et/instrument/"
         + code
-        + "/trading/trades_json?"
+        + "/trading/trades_json?date="
+        + day
     )
     data = {"date": day}
     url = domain + urllib.parse.urlencode(data)
@@ -99,38 +82,13 @@ def get_dates(choice):
 
     return scrapable_dates
 
-'''
-# Siin saab testida mitte väga populaarset võlakirja ja 100 päeva. Kõvasti aeglasem on, aga mis teha.
-# Tulevikus oleks siin andmebaasi võimalus.
-def test():
-    päevad = get_dates(100)  # 100 päeva
-    võlakiri = "EE3300002047"  # Coop Pank 5.5% bond
-    kogu_info = []  # Siia salvestab kogu info
-    for i in päevad:
-        result = scraper(i, võlakiri)
-        if result != None:  # Igaksjuhuks errorite pärast, tegin bugteste
-            kogu_info += result
-    print(kogu_info)
-
-
-test()
-'''
 #----------------------------------------------------------------------------------------#
 
 from flask import Flask, render_template, request
-import data
+import data # data.py faili importimine
 import re
 
 app = Flask(__name__)
-
-def get_symbol(pattern):
-    dictionary = data.database
-    bond_names = []
-    for key in dictionary:
-        result = re.search(pattern, key, re.IGNORECASE)
-        if result:
-            bond_names.append(key)
-    return bond_names
 
 # Funktsioon tõlgendamaks vormist saadavad ajaperioodid sobivaks päevade arvuks get_dates() jaoks
 def period_to_days(period):
@@ -148,6 +106,16 @@ def period_to_days(period):
         return 60
     else:
         return 0
+
+#
+def get_symbol(pattern):
+    dictionary = data.database
+    bond_names = []
+    for key in dictionary:
+        result = re.search(pattern, key, re.IGNORECASE)
+        if result:
+            bond_names.append(key)
+    return bond_names
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -182,19 +150,24 @@ def index():
                             clean_data.append((clean_price, quantity, trade_date))
                             dirty_data.append((dirty_price,quantity,trade_date))
 
-                prices = clean_data # kui tahad dirty data siis vaheta siin
+                if clean_data:
+                    bond_labels_clean = [el[2] for el in clean_data]
+                    bond_data_clean = [el[0] for el in clean_data]
 
-                if prices:
-                    bond_labels = [el[2] for el in prices]
-                    bond_data = [el[0] for el in prices]
+                if dirty_data:
+                    bond_labels_dirty = [el[2] for el in dirty_data]
+                    bond_data_dirty = [el[0] for el in dirty_data]
 
                     return render_template(
                         "index.html",
                         all_symbols=all_symbols,
                         symbol_match=symbol_match,
-                        prices=prices,
-                        bond_labels=bond_labels,
-                        bond_data=bond_data,
+                        prices_clean=clean_data,
+                        prices_dirty=dirty_data,
+                        bond_labels_clean=bond_labels_clean,
+                        bond_data_clean=bond_data_clean,
+                        bond_labels_dirty=bond_labels_dirty,
+                        bond_data_dirty=bond_data_dirty
                     )
                 
                 else: # Juhul kui prices on tühi list tagastab vastava teate
@@ -217,7 +190,6 @@ def index():
     return render_template(
                         "index.html", 
                         all_symbols=all_symbols, 
-                        symbol_match=symbol_match
                         )
 
 if __name__ == "__main__":
