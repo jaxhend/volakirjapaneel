@@ -29,9 +29,6 @@
 # https://www.geeksforgeeks.org/autocomplete-input-suggestion-using-python-and-flask/
 # LISA JUURDE!!!
 ################################################
-
-
-from flask import Flask, render_template, request
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import urllib.parse
@@ -152,6 +149,16 @@ def get_symbol(pattern):
 
 
 app = Flask(__name__)
+
+#
+def get_symbol(pattern):
+    dictionary = data.database
+    bond_names = []
+    for key in dictionary:
+        result = re.search(pattern, key, re.IGNORECASE)
+        if result:
+            bond_names.append(key)
+    return bond_names
 
 #
 def get_symbol(pattern):
