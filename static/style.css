@@ -13,7 +13,13 @@ body {
 .title {
     color: #444;
     font-family: 'Courier New', Courier, monospace;
+    border: 2px solid #81a1c1;
+    border-radius: 10px; /* Ümarad nurgad */
+    padding: 10px; 
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    text-align: center; /* Tiitel keskel */
 }
+
 
 .section {
     text-align: center;
@@ -28,6 +34,7 @@ body {
     text-align: center;
     background: #fff;
     padding: 20px;
+    border-radius: 10px; /* Ümarad nurgad */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 560px;
 }
