@@ -1,12 +1,9 @@
-# Robert:
-# Tee ilusaks, tabs, font ühtlaseks, kommenteeri koodi, kasutu lõika välja, II graafik, info ja YTM calc.
-
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import urllib.parse
 import requests
 
-# Web scraper, mis tagastab järjendi.
+# Veebilehe kraapija, mis tagastab järjendi.
 # Näidis json fail: https://nasdaqbaltic.com/statistics/et/instrument/EE3300002047/trading/trades_json?date=2024-09-25
 def scraper(day, code):
     domain = (

@@ -1,3 +1,4 @@
+#OK
 # Programmi eesmärk on võtta LHV veebilehelt võlakirjade pikemad nimed (lahti kirjutatud) ja leida neile sobiv ISIN kood.
 # bonds.csv on sain leheküljelt https://nasdaqbaltic.com/statistics/et/bonds vajutades nuppu "LAE ALLA XLSX"
 
