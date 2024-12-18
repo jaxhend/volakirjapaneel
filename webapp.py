@@ -15,7 +15,7 @@
 # LHV internetipanga võlakirjade ost/müük sektsioon
 #
 # Lisakommentaar (nt käivitusjuhend):
-#
+# install ...
 # VAATA ÜLE!!!
 #
 # Kasutatud materjalid:
@@ -29,6 +29,9 @@
 # https://www.geeksforgeeks.org/autocomplete-input-suggestion-using-python-and-flask/
 # LISA JUURDE!!!
 ################################################
+
+
+from flask import Flask, render_template, request
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import urllib.parse
@@ -43,8 +46,7 @@ def scraper(day, code):
     domain = (
         "https://nasdaqbaltic.com/statistics/et/instrument/"
         + code
-        + "/trading/trades_json?date="
-        + day
+        + "/trading/trades_json?"
     )
     data = {"date": day}
     url = domain + urllib.parse.urlencode(data)
@@ -147,28 +149,8 @@ def get_symbol(pattern):
     return bond_names
 
 
-
 app = Flask(__name__)
 
-#
-def get_symbol(pattern):
-    dictionary = data.database
-    bond_names = []
-    for key in dictionary:
-        result = re.search(pattern, key, re.IGNORECASE)
-        if result:
-            bond_names.append(key)
-    return bond_names
-
-#
-def get_symbol(pattern):
-    dictionary = data.database
-    bond_names = []
-    for key in dictionary:
-        result = re.search(pattern, key, re.IGNORECASE)
-        if result:
-            bond_names.append(key)
-    return bond_names
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -178,13 +160,10 @@ def index():
         if "symbol" in request.form:
             symbol = request.form.get("symbol")  # HTML input välja sisend
             period = request.form.get("period")  # HTML select välja sisend
-
             symbol_match = get_symbol(symbol)  # Leiab sümbolile vastava info
 
             if symbol_match:
                 bond_symbol = data.database[symbol_match[0]]
-
-                
                 date_list = get_dates(int(period))
 
                 clean_data = []
@@ -214,15 +193,15 @@ def index():
                         "index.html",
                         all_symbols=all_symbols,
                         symbol_match=symbol_match,
- prices_clean=clean_data,
+                        prices_clean=clean_data,
                         prices_dirty=dirty_data,
                         bond_labels_clean=bond_labels_clean,
                         bond_data_clean=bond_data_clean,
                         bond_labels_dirty=bond_labels_dirty,
-                        bond_data_dirty=bond_data_dirty
+                        bond_data_dirty=bond_data_dirty,
                     )
-                
-                else: # Juhul kui prices on tühi list tagastab vastava teate
+
+                else:  # Juhul kui prices on tühi list tagastab vastava teate
                     return render_template(
                         "index.html",
                         all_symbols=all_symbols,
@@ -240,9 +219,9 @@ def index():
                 )
 
     return render_template(
-                        "index.html", 
-                        all_symbols=all_symbols, 
-                        )
+        "index.html",
+        all_symbols=all_symbols,
+    )
 
 
 if __name__ == "__main__":

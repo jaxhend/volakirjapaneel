@@ -14,10 +14,10 @@ body {
     color: #444;
     font-family: 'Courier New', Courier, monospace;
     border: 2px solid #81a1c1;
-    border-radius: 10px; /* Ümarad nurgad */
+    border-radius: 10px;
     padding: 10px; 
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-    text-align: center; /* Tiitel keskel */
+    text-align: center;
 }
 
 
@@ -34,7 +34,7 @@ body {
     text-align: center;
     background: #fff;
     padding: 20px;
-    border-radius: 10px; /* Ümarad nurgad */
+    border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 560px;
 }
@@ -78,7 +78,6 @@ li {
     margin-bottom: 5px;
 }
 
-/* Graafiku asukoht lehel */
 .graph {
     width: 90%; 
     margin: 0 auto; 
@@ -124,7 +123,7 @@ li {
 
 .ui-autocomplete {
     max-height: 200px; 
-    overflow-y: auto;  /* Lisab vertikaalse kerimise */
-    overflow-x: hidden; /* Välistab horisontaalse kerimise */
+    overflow-y: auto;
+    overflow-x: hidden;
     z-index: 1000;
 }
