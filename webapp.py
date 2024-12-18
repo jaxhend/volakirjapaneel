@@ -46,7 +46,8 @@ def scraper(day, code):
     domain = (
         "https://nasdaqbaltic.com/statistics/et/instrument/"
         + code
-        + "/trading/trades_json?"
+        + "/trading/trades_json?date="
+        + day
     )
     data = {"date": day}
     url = domain + urllib.parse.urlencode(data)
@@ -152,6 +153,16 @@ def get_symbol(pattern):
 
 app = Flask(__name__)
 
+#
+def get_symbol(pattern):
+    dictionary = data.database
+    bond_names = []
+    for key in dictionary:
+        result = re.search(pattern, key, re.IGNORECASE)
+        if result:
+            bond_names.append(key)
+    return bond_names
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     all_symbols = list(data.database.keys())
@@ -184,22 +195,27 @@ def index():
                             clean_data.append((clean_price, quantity, trade_date))
                             dirty_data.append((dirty_price, quantity, trade_date))
 
-                prices = clean_data  # kui tahad dirty data siis vaheta siin
+                if clean_data:
+                    bond_labels_clean = [el[2] for el in clean_data]
+                    bond_data_clean = [el[0] for el in clean_data]
 
-                if prices:
-                    bond_labels = [el[2] for el in prices]
-                    bond_data = [el[0] for el in prices]
+                if dirty_data:
+                    bond_labels_dirty = [el[2] for el in dirty_data]
+                    bond_data_dirty = [el[0] for el in dirty_data]
 
                     return render_template(
                         "index.html",
                         all_symbols=all_symbols,
                         symbol_match=symbol_match,
-                        prices=prices,
-                        bond_labels=bond_labels,
-                        bond_data=bond_data,
+ prices_clean=clean_data,
+                        prices_dirty=dirty_data,
+                        bond_labels_clean=bond_labels_clean,
+                        bond_data_clean=bond_data_clean,
+                        bond_labels_dirty=bond_labels_dirty,
+                        bond_data_dirty=bond_data_dirty
                     )
-
-                else:  # Juhul kui prices on tühi list tagastab vastava teate
+                
+                else: # Juhul kui prices on tühi list tagastab vastava teate
                     return render_template(
                         "index.html",
                         all_symbols=all_symbols,
@@ -217,8 +233,9 @@ def index():
                 )
 
     return render_template(
-        "index.html", all_symbols=all_symbols
-    )
+                        "index.html", 
+                        all_symbols=all_symbols, 
+                        )
 
 
 if __name__ == "__main__":

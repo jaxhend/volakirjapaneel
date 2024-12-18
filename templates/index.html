@@ -65,22 +65,32 @@
         {% endif %}
 
         <!--Graafiku sektsioon-->
-        {% if prices %}
+        {% if prices_clean %}
         <div style="height: 60vh; width: 100%;" class="graph">
             <canvas id="bondChart"></canvas>
         </div>
 
+        <!-- Toggle nupp graafikute vahetamiseks -->
+        <button class="toggleButton" id="toggleButton">Vaheta graafik </button>
+
         <script>
-            const labels = {{ bond_labels|tojson }};
-            const bondData = {{ bond_data|tojson }};
+            const cleanLabels = {{ bond_labels_clean|tojson }};
+            const cleanData = {{ bond_data_clean|tojson }};
+            const dirtyLabels = {{ bond_labels_dirty|tojson }};
+            const dirtyData = {{ bond_data_dirty|tojson }};
+
+            let currentMode = "clean"
 
             const data = {
-                labels: labels,
+                labels: cleanLabels,
                 datasets: [{
-                    label: 'Hind',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: bondData,
+                    label: 'Hind (intressita)', // kogu graafikut puudutav visuaalne osa
+                    backgroundColor: 'rgb(136, 192, 208)',
+                    borderColor: 'rgb(129, 161, 193)',
+                    data: cleanData,
+                    pointBackgroundColor: 'rgb(136, 192, 208)',
+                    pointBorderColor: 'rgb(129, 161, 193)',
+                    pointRadius: 3,
                 }]
             };
 
@@ -97,11 +107,30 @@
                 document.getElementById('bondChart'),
                 config
             );
+
+                const toggleButton = document.getElementById('toggleButton');
+                toggleButton.addEventListener('click', () => {
+                if (currentMode === 'clean') {
+                    // Vaheta intressiga andmete peale
+                    myChart.data.labels = dirtyLabels;
+                    myChart.data.datasets[0].data = dirtyData;
+                    myChart.data.datasets[0].label = 'Hind (intressiga)';
+                    currentMode = 'dirty';
+                } else {
+                    // Vaheta intressita andmete peale
+                    myChart.data.labels = cleanLabels;
+                    myChart.data.datasets[0].data = cleanData;
+                    myChart.data.datasets[0].label = 'Hind (intressita)';
+                    currentMode = 'clean';
+                }
+                myChart.update();
+            });
+        
         </script>
         {% endif %}
 
         <!--Juhul kui tehinguid polnud-->
-        {% if not prices %}
+        {% if not prices_clean %}
         {{ message }}
         {% endif %}
 
