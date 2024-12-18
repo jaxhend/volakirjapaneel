@@ -6,7 +6,7 @@
 # Teema: Balti turu võlakirjapaneel
 # Kirjeldus:
 # Luua programm, mis näitab Balti turu võlakirju puudutavat
-# infot mugavamalt kui olemasoleval LHV leheküljel.
+# infot mugavamalt kui olemasoleval LHV ja Nasdaqi leheküljel.
 #
 #
 # Autorid: Hendrik Jaks, Robert Ilves
