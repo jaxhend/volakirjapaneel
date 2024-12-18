@@ -109,4 +109,11 @@ li {
 .btn:hover svg {
     transform: scale(0.9);
     fill: #333333;
-}  
+}
+
+.ui-autocomplete {
+    max-height: 200px; 
+    overflow-y: auto;  /* Lisab vertikaalse kerimise */
+    overflow-x: hidden; /* Välistab horisontaalse kerimise */
+    z-index: 1000;
+}

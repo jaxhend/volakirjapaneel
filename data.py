@@ -15,7 +15,7 @@ database = {
     "Inbank 9.00% allutatud võlakiri 13.12.2033": "INBB090033A",
     "IuteCredit Finance S.a r.l 11% võlakiri 06.10.2026": "IUTE110026A",
     "LHV Group 6% allutatud võlakiri 30.09.2030": "LHVB060030A",
-    "LHV Group 10.5% allutatud võlakiri 29.09.2033": "LHVB105033A",
+    "LHV Group 10.5% allutatud võlakiri 29.09.2033": "EE3300003573",
     "Liven rohevõlakiri 10.5%": "LVNB105028A",
     "Mainor Ülemiste 8.5% võlakiri 10.03.2027": "MAYB085027FA",
     "Modera võlakiri 11% 13.09.2027": "MODE110027FA",

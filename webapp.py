@@ -66,21 +66,17 @@ def scraper(day, code):
     data = {"date": day}
     url = domain + urllib.parse.urlencode(data)
     request = requests.get(url)
-
     result = []
-    try:
-        if request.status_code == 200:
-            data = request.json()
-            if data["data"] != []:
-                for el in data["data"]:
-                    clean = round(float(el["Price_clean"].replace(",", ".")), 2)
-                    dirty = round(float(el["Price"].replace(",", ".")), 2)
-                    quantity = int(el["Quantity"])
-                    # Päev, intressita ja intressiga hind, kogus
-                    result.append([day, clean, dirty, quantity])
-                return result
-        else:
-            return None
+    try: #kustutasin siin else osa ära, sest request.status_code tagastas 500 mitte 200
+        data = request.json()
+        if data["data"] != []:
+            for el in data["data"]:
+                clean = round(float(el["Price_clean"].replace(",", ".")), 2)
+                dirty = round(float(el["Price"].replace(",", ".")), 2)
+                quantity = int(el["Quantity"])
+                # Päev, intressita ja intressiga hind, kogus
+                result.append([day, clean, dirty, quantity])
+            return result
     except ValueError:
         return None
 
@@ -126,7 +122,6 @@ import data
 import re
 
 app = Flask(__name__)
-app.secret_key = "RobertiJaHendrikuProjekt"
 
 def get_symbol(pattern):
     dictionary = data.database
@@ -157,15 +152,13 @@ def period_to_days(period):
 @app.route("/", methods=["GET", "POST"])
 def index():
     all_symbols = list(data.database.keys())
-    symbol_match = []
-    prices = []
 
     if request.method == "POST":
         if "symbol" in request.form:
             symbol = request.form.get("symbol") # HTML input välja sisend
             period = request.form.get("period") # HTML select välja sisend
 
-            symbol_match = get_symbol(symbol)
+            symbol_match = get_symbol(symbol) # Leiab sümbolile vastava info
 
             if symbol_match:
                 bond_symbol = data.database[symbol_match[0]]
@@ -189,7 +182,7 @@ def index():
                             clean_data.append((clean_price, quantity, trade_date))
                             dirty_data.append((dirty_price,quantity,trade_date))
 
-                prices = clean_data # praegu testimas kas clean_dataga saab mingid andmed näidata
+                prices = clean_data # kui tahad dirty data siis vaheta siin
 
                 if prices:
                     bond_labels = [el[2] for el in prices]
@@ -203,6 +196,15 @@ def index():
                         bond_labels=bond_labels,
                         bond_data=bond_data,
                     )
+                
+                else: # Juhul kui prices on tühi list tagastab vastava teate
+                    return render_template(
+                    "index.html",
+                    all_symbols=all_symbols,
+                    symbol_match=symbol_match,
+                    message="Valitud perioodil ei toimunud ühtegi tehingut."
+                    )
+
             else:
                 # Tagastab teate kui võlakirja ei leidu
                 return render_template(
@@ -212,10 +214,11 @@ def index():
                     message="Vastavat võlakirja ei leitud.",
                 )
 
-    return render_template("index.html", 
-                            all_symbols=all_symbols, 
-                            symbol_match=symbol_match
-                            )
+    return render_template(
+                        "index.html", 
+                        all_symbols=all_symbols, 
+                        symbol_match=symbol_match
+                        )
 
 if __name__ == "__main__":
     app.run(debug=True)
