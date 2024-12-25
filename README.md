@@ -7,7 +7,7 @@ Luua programm, mis näitab Balti turu võlakirju puudutavat infot mugavamalt kui
 ### Mõningane eeskuju:
 LHV internetipanga võlakirjade ost/müük sektsioon
 
-### Lisakommentaar (nt käivitusjuhend):
+### Käivitusjuhend:
 ```
 pip install beautifulsoup4
 pip install requests
