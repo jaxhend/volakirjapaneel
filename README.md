@@ -4,8 +4,7 @@
 ### [Esitluse link](https://docs.google.com/presentation/d/16npRurexGRr1fuarI6YzEbnIaRRfMJyTs7zUo1wRzM0/edit?usp=sharing)
 
 ### Kirjeldus:
-Luua programm, mis näitab Balti turu võlakirju puudutavat infot mugavamalt kui olemasoleval LHV ja Nasdaqi leheküljel.
-Kasutaja saab otsida võlakirja kohta informatsiooni, mida tal muidu oleks keeruline ükshaaval internetist otsida. Koondame vajaliku informatsiooni, et teha kasutajakogemus mugavaks ja informatsiooni otsimise tõhusamaks.
+ - Luua programm, mis näitab Balti turu võlakirju puudutavat infot mugavamalt kui olemasoleval LHV ja Nasdaqi leheküljel. Kasutaja saab otsida võlakirja kohta informatsiooni, mida tal muidu oleks keeruline ükshaaval internetist otsida. Koondame vajaliku informatsiooni, et teha kasutajakogemus mugavaks ja informatsiooni otsimise tõhusamaks.
 - Millist probleemi projekt lahendama hakkab?
     - Balti võlakirjadest on internetis vähe infot ja seda on raske leida. Näiteks töötleme andmeid, et kasutaja näeks graafikuid, mida ta muidu peaks manuaalselt ise koostama. Lisaks koondame vajaliku info ühte kohta, et oleks võlakirjast selge ülevaade.
 - Miks valisite selle projekti?
@@ -28,23 +27,26 @@ pip install flask
 
 
 ### Kasutatud materjalid:
-https://medium.com/@moraneus/python-flask-a-comprehensive-guide-from-basic-to-advanced-fbc6ec9aa5f7 <br>
-https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebisisuParsimine <br>
-https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebirakendus <br>
-https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringRegex <br>
-https://flask.palletsprojects.com/en/stable/quickstart/ <br>
-https://jinja.palletsprojects.com/en/stable/templates/ <br>
-https://www.geeksforgeeks.org/how-to-add-graphs-to-flask-apps/ <br>
-https://www.geeksforgeeks.org/autocomplete-input-suggestion-using-python-and-flask/ <br>
-https://www.w3schools.com/html/html_lists_unordered.asp <br>
-https://www.w3schools.com/tags/tag_select.asp <br>
-https://www.w3schools.com/css/css_text_spacing.asp <br>
-https://www.geeksforgeeks.org/response-json-python-requests/ <br>
+- https://medium.com/@moraneus/python-flask-a-comprehensive-guide-from-basic-to-advanced-fbc6ec9aa5f7
+- https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebisisuParsimine 
+- https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringVeebirakendus 
+- https://courses.cs.ut.ee/2024/programmeerimine/fall/Main/SilmaringRegex 
+- https://flask.palletsprojects.com/en/stable/quickstart/ 
+- https://jinja.palletsprojects.com/en/stable/templates/ 
+- https://www.geeksforgeeks.org/how-to-add-graphs-to-flask-apps/ 
+- https://www.geeksforgeeks.org/autocomplete-input-suggestion-using-python-and-flask/
+- https://www.w3schools.com/html/html_lists_unordered.asp
+- https://www.w3schools.com/tags/tag_select.asp
+- https://www.w3schools.com/css/css_text_spacing.asp 
+- https://www.geeksforgeeks.org/response-json-python-requests/
 
 
 ### Allikad:
-https://fp.lhv.ee/baltiturg  <br>
-https://nasdaqbaltic.com/statistics/et/bonds
+- https://fp.lhv.ee/baltiturg
+- https://nasdaqbaltic.com/statistics/et/bonds
+
+### Edasiarendus: 
+
 
 ### Autorid:
 Hendrik Jaks, Robert Ilves
