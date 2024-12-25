@@ -1,1 +1,1 @@
-### Veidi outdated
+Main branchis on uuem kood.
