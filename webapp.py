@@ -46,7 +46,7 @@ import data
 import re
 
 
-# Veebilehe kraapija, mis tagastab järjendi.
+# Veebilehe koorija, mis tagastab järjendi.
 # Näidis json fail: https://nasdaqbaltic.com/statistics/et/instrument/EE3300002047/trading/trades_json?date=2024-09-25
 def scraper(day, code):
     domain = (
@@ -112,10 +112,12 @@ def info(code):
 # (seda seetõttu, kuna mõned (pankade) võlakirjad lunastatakse ennetähtaegselt ja tüüpiliselt see on 5 aastat peale noteerimist)
 
 
-def YTM_calc(isin, choice = ""):
+def YTM_calc(isin, choice=""):
     bond_info = info(isin)
-    
-    nominal = float(bond_info[1][1].replace(" ", "").replace("EUR", "").replace(",","."))
+
+    nominal = float(
+        bond_info[1][1].replace(" ", "").replace("EUR", "").replace(",", ".")
+    )
     listing_date = bond_info[3][1]
     maturity_date = bond_info[4][1]
     coupon = float(bond_info[5][1].replace(",", ".")) / 100 * nominal
@@ -132,7 +134,7 @@ def YTM_calc(isin, choice = ""):
         i += 1
     last_dirty_price = result[0][2] / 100 * nominal
 
-    if choice == "5": # Juhul kui võlakiri lunastatakse viie aasta pärast noteerimist
+    if choice == "5":  # Juhul kui võlakiri lunastatakse viie aasta pärast noteerimist
         formatted_date = datetime.strptime(listing_date, "%d.%m.%Y")
         matures = formatted_date.replace(year=formatted_date.year + 5)
     else:
@@ -172,7 +174,7 @@ def index():
             if symbol_match:
                 bond_symbol = data.database[symbol_match[0]]
                 date_list = get_dates(int(period))
-                calculator = YTM_calc(bond_symbol,calc_choice)
+                calculator = YTM_calc(bond_symbol, calc_choice)
 
                 clean_data = []
                 dirty_data = []
@@ -209,7 +211,7 @@ def index():
                         bond_labels_dirty=bond_labels_dirty,
                         bond_data_dirty=bond_data_dirty,
                         more_info=more_info,
-                        calculator=calculator
+                        calculator=calculator,
                     )
 
                 else:  # Juhul kui prices on tühi list tagastab vastava teate
