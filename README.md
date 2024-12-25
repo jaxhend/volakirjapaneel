@@ -46,6 +46,17 @@ pip install flask
 - https://nasdaqbaltic.com/statistics/et/bonds
 
 ### Edasiarendus: 
+ - Kuupäeva valimise võimekus
+ - Hetke turusügavus
+ - Andmebaas
+ - Hiljutised uudised
+ - Lisa graafik
+ - Võrdlustabel (filteerida omaduste järgi)
+ - Debt to equity ratio
+ - Interest coverage ratio
+ - ChatGPT API päring
+ - Meili peale teavitus, kui on toimunud müük
+ - Rakendus Internetti
 
 
 ### Autorid:
