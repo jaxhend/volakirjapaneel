@@ -1,6 +1,8 @@
 # Programmeerimine I 2024/2025 sügissemester
-
 ## Balti turu võlakirjapaneel
+
+### [Esitluse link](https://docs.google.com/presentation/d/16npRurexGRr1fuarI6YzEbnIaRRfMJyTs7zUo1wRzM0/edit?usp=sharing)
+
 ### Kirjeldus:
 Luua programm, mis näitab Balti turu võlakirju puudutavat infot mugavamalt kui olemasoleval LHV ja Nasdaqi leheküljel.
 Kasutaja saab otsida võlakirja kohta informatsiooni, mida tal muidu oleks keeruline ükshaaval internetist otsida. Koondame vajaliku informatsiooni, et teha kasutajakogemus mugavaks ja informatsiooni otsimise tõhusamaks.
