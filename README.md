@@ -22,7 +22,7 @@ pip install beautifulsoup4
 pip install requests
 pip install virtualenv
 pip install flask
-#mine CMD's programmi kausta ning sisesta 'python webapp.py'
+mine CMD's programmi kausta ning sisesta 'python webapp.py'
 ```
 
 
