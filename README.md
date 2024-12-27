@@ -25,6 +25,13 @@ pip install flask
 mine CMD's programmi kausta ning sisesta 'python webapp.py'
 ```
 
+### Kuvatõmmised
+![image](https://github.com/user-attachments/assets/9727350e-1e96-41d7-9fc4-9f77b50cc0dc)
+![image](https://github.com/user-attachments/assets/b566ac02-f493-4190-a995-df525dbc1f38)
+
+
+
+
 
 ### Kasutatud materjalid:
 - https://medium.com/@moraneus/python-flask-a-comprehensive-guide-from-basic-to-advanced-fbc6ec9aa5f7
